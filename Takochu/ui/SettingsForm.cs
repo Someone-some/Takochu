@@ -27,7 +27,6 @@ namespace Takochu.ui
             DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime("res/objectdb.xml").ToString();
             ShowArgs.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("ShowArgs"));
             LanguageComboBox.Text = Convert.ToString(SettingsUtil.GetSetting("Translation"));
-            useInternalNames.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("InternalNames"));
             useDevCheckBox.Checked = Convert.ToBoolean(SettingsUtil.GetSetting("Dev"));
 
             foreach (string langs in Translator.sStringToLang.Keys)
@@ -53,6 +52,7 @@ namespace Takochu.ui
         private void RegenDBBtn_Click(object sender, EventArgs e)
         {
             ObjectDB.GenDB();
+            ObjectDB.Load();
             DbInfoLbl.Text = "ObjectDatabase last generated on: " + File.GetLastWriteTime("res/objectdb.xml").ToString();
         }
 
@@ -81,12 +81,6 @@ namespace Takochu.ui
         private void useDevCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             SettingsUtil.SetSetting("Dev", useDevCheckBox.Checked);
-        }
-        private void useInternalNames_CheckedChanged(object sender, EventArgs e)
-        {
-            // Luma48 was here
-            SettingsUtil.SetSetting("InternalNames", useInternalNames.Checked);
-            ProgramUtil.UpdateTranslation();
         }
     }
 }
